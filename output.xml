@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generated="20170207 10:36:07.237" generator="Robot 2.9.2 (Python 2.7.12 on linux2)">
+<suite source="/var/lib/jenkins/workspace/taTest/src/atfcommons_wrap.robot" id="s1" name="Atfcommons Wrap">
+<test id="s1-t1" name="gal1">
+<kw name="Create List" library="BuiltIn">
+<doc>Returns a list containing given items.</doc>
+<arguments>
+<arg>lst1</arg>
+<arg>lst2</arg>
+<arg>lst3</arg>
+<arg>lst4</arg>
+</arguments>
+<assign>
+<var>${tmp}</var>
+</assign>
+<msg timestamp="20170207 10:36:08.768" level="INFO">${tmp} = [u'lst1', u'lst2', u'lst3', u'lst4']</msg>
+<status status="PASS" endtime="20170207 10:36:08.768" starttime="20170207 10:36:08.767"></status>
+</kw>
+<kw name="Get As List" library="ATFCommonsWrapper">
+<arguments>
+<arg>${tmp}</arg>
+</arguments>
+<assign>
+<var>${list}</var>
+</assign>
+<msg timestamp="20170207 10:36:08.821" level="INFO">&lt;lambda&gt; - [u'lst1', u'lst2', u'lst3', u'lst4']</msg>
+<msg timestamp="20170207 10:36:08.821" level="INFO">${list} = [u'lst1', u'lst2', u'lst3', u'lst4']</msg>
+<status status="PASS" endtime="20170207 10:36:08.821" starttime="20170207 10:36:08.768"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>@{list}[0]</arg>
+<arg>lst1</arg>
+</arguments>
+<status status="PASS" endtime="20170207 10:36:08.821" starttime="20170207 10:36:08.821"></status>
+</kw>
+<status status="PASS" endtime="20170207 10:36:08.821" critical="yes" starttime="20170207 10:36:08.767"></status>
+</test>
+<test id="s1-t2" name="gal2">
+<kw name="Create List" library="BuiltIn">
+<doc>Returns a list containing given items.</doc>
+<arguments>
+<arg>lst1</arg>
+</arguments>
+<assign>
+<var>${tmp}</var>
+</assign>
+<msg timestamp="20170207 10:36:08.822" level="INFO">${tmp} = [u'lst1']</msg>
+<status status="PASS" endtime="20170207 10:36:08.822" starttime="20170207 10:36:08.822"></status>
+</kw>
+<kw name="Get As List" library="ATFCommonsWrapper">
+<arguments>
+<arg>${tmp}</arg>
+</arguments>
+<assign>
+<var>${list}</var>
+</assign>
+<msg timestamp="20170207 10:36:08.823" level="INFO">&lt;lambda&gt; - [u'lst1']</msg>
+<msg timestamp="20170207 10:36:08.823" level="INFO">${list} = [u'lst1']</msg>
+<status status="PASS" endtime="20170207 10:36:08.823" starttime="20170207 10:36:08.822"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>@{list}[0]</arg>
+<arg>lst1</arg>
+</arguments>
+<status status="PASS" endtime="20170207 10:36:08.824" starttime="20170207 10:36:08.823"></status>
+</kw>
+<status status="PASS" endtime="20170207 10:36:08.824" critical="yes" starttime="20170207 10:36:08.822"></status>
+</test>
+<test id="s1-t3" name="gal3">
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>lst1</arg>
+</arguments>
+<assign>
+<var>${tmp}</var>
+</assign>
+<msg timestamp="20170207 10:36:08.824" level="INFO">${tmp} = lst1</msg>
+<status status="PASS" endtime="20170207 10:36:08.824" starttime="20170207 10:36:08.824"></status>
+</kw>
+<kw name="Get As List" library="ATFCommonsWrapper">
+<arguments>
+<arg>${tmp}</arg>
+</arguments>
+<assign>
+<var>${list}</var>
+</assign>
+<msg timestamp="20170207 10:36:08.825" level="INFO">&lt;lambda&gt; - lst1</msg>
+<msg timestamp="20170207 10:36:08.825" level="INFO">${list} = [u'lst1']</msg>
+<status status="PASS" endtime="20170207 10:36:08.825" starttime="20170207 10:36:08.825"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>@{list}[0]</arg>
+<arg>lst1</arg>
+</arguments>
+<status status="PASS" endtime="20170207 10:36:08.826" starttime="20170207 10:36:08.826"></status>
+</kw>
+<status status="PASS" endtime="20170207 10:36:08.826" critical="yes" starttime="20170207 10:36:08.824"></status>
+</test>
+<test id="s1-t4" name="gal4">
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on given items.</doc>
+<arguments>
+<arg>lst1</arg>
+<arg>lst2</arg>
+<arg>lst3</arg>
+<arg>lst4</arg>
+</arguments>
+<assign>
+<var>${tmp}</var>
+</assign>
+<msg timestamp="20170207 10:36:08.827" level="WARN">Giving keys and values separately to 'Create Dictionary' keyword is deprecated. Use 'key=value' syntax instead.</msg>
+<msg timestamp="20170207 10:36:08.827" level="INFO">${tmp} = {u'lst1': u'lst2', u'lst3': u'lst4'}</msg>
+<status status="PASS" endtime="20170207 10:36:08.827" starttime="20170207 10:36:08.826"></status>
+</kw>
+<kw name="Get As List" library="ATFCommonsWrapper">
+<arguments>
+<arg>${tmp}</arg>
+</arguments>
+<assign>
+<var>${list}</var>
+</assign>
+<msg timestamp="20170207 10:36:08.828" level="INFO">&lt;lambda&gt; - {u'lst1': u'lst2', u'lst3': u'lst4'}</msg>
+<msg timestamp="20170207 10:36:08.828" level="INFO">${list} = [u'lst1', u'lst3']</msg>
+<status status="PASS" endtime="20170207 10:36:08.828" starttime="20170207 10:36:08.827"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>@{list}[0]</arg>
+<arg>lst1</arg>
+</arguments>
+<status status="PASS" endtime="20170207 10:36:08.828" starttime="20170207 10:36:08.828"></status>
+</kw>
+<status status="PASS" endtime="20170207 10:36:08.828" critical="yes" starttime="20170207 10:36:08.826"></status>
+</test>
+<test id="s1-t5" name="gal5">
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on given items.</doc>
+<arguments>
+<arg>lst1</arg>
+<arg>lst2</arg>
+</arguments>
+<assign>
+<var>${tmp}</var>
+</assign>
+<msg timestamp="20170207 10:36:08.829" level="WARN">Giving keys and values separately to 'Create Dictionary' keyword is deprecated. Use 'key=value' syntax instead.</msg>
+<msg timestamp="20170207 10:36:08.829" level="INFO">${tmp} = {u'lst1': u'lst2'}</msg>
+<status status="PASS" endtime="20170207 10:36:08.829" starttime="20170207 10:36:08.829"></status>
+</kw>
+<kw name="Get As List" library="ATFCommonsWrapper">
+<arguments>
+<arg>${tmp}</arg>
+</arguments>
+<assign>
+<var>${list}</var>
+</assign>
+<msg timestamp="20170207 10:36:08.830" level="INFO">&lt;lambda&gt; - {u'lst1': u'lst2'}</msg>
+<msg timestamp="20170207 10:36:08.830" level="INFO">${list} = [u'lst1']</msg>
+<status status="PASS" endtime="20170207 10:36:08.830" starttime="20170207 10:36:08.829"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>@{list}[0]</arg>
+<arg>lst1</arg>
+</arguments>
+<status status="PASS" endtime="20170207 10:36:08.831" starttime="20170207 10:36:08.830"></status>
+</kw>
+<status status="PASS" endtime="20170207 10:36:08.831" critical="yes" starttime="20170207 10:36:08.829"></status>
+</test>
+<test id="s1-t6" name="gal6">
+<kw name="Create List" library="BuiltIn">
+<doc>Returns a list containing given items.</doc>
+<assign>
+<var>${tmp}</var>
+</assign>
+<msg timestamp="20170207 10:36:08.832" level="INFO">${tmp} = []</msg>
+<status status="PASS" endtime="20170207 10:36:08.832" starttime="20170207 10:36:08.831"></status>
+</kw>
+<kw name="Get As List" library="ATFCommonsWrapper">
+<arguments>
+<arg>${tmp}</arg>
+</arguments>
+<assign>
+<var>${list}</var>
+</assign>
+<msg timestamp="20170207 10:36:08.832" level="INFO">&lt;lambda&gt; - []</msg>
+<msg timestamp="20170207 10:36:08.833" level="INFO">${list} = []</msg>
+<status status="PASS" endtime="20170207 10:36:08.833" starttime="20170207 10:36:08.832"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>'${list}'</arg>
+<arg>'[]'</arg>
+</arguments>
+<status status="PASS" endtime="20170207 10:36:08.833" starttime="20170207 10:36:08.833"></status>
+</kw>
+<status status="PASS" endtime="20170207 10:36:08.833" critical="yes" starttime="20170207 10:36:08.831"></status>
+</test>
+<test id="s1-t7" name="gal7">
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on given items.</doc>
+<assign>
+<var>${tmp}</var>
+</assign>
+<msg timestamp="20170207 10:36:08.834" level="INFO">${tmp} = {}</msg>
+<status status="PASS" endtime="20170207 10:36:08.834" starttime="20170207 10:36:08.834"></status>
+</kw>
+<kw name="Get As List" library="ATFCommonsWrapper">
+<arguments>
+<arg>${tmp}</arg>
+</arguments>
+<assign>
+<var>${list}</var>
+</assign>
+<msg timestamp="20170207 10:36:08.835" level="INFO">&lt;lambda&gt; - {}</msg>
+<msg timestamp="20170207 10:36:08.835" level="INFO">${list} = []</msg>
+<status status="PASS" endtime="20170207 10:36:08.835" starttime="20170207 10:36:08.834"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>'${list}'</arg>
+<arg>'[]'</arg>
+</arguments>
+<status status="PASS" endtime="20170207 10:36:08.835" starttime="20170207 10:36:08.835"></status>
+</kw>
+<status status="PASS" endtime="20170207 10:36:08.835" critical="yes" starttime="20170207 10:36:08.833"></status>
+</test>
+<test id="s1-t8" name="gal8">
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>${null}</arg>
+</arguments>
+<assign>
+<var>${tmp}</var>
+</assign>
+<msg timestamp="20170207 10:36:08.836" level="INFO">${tmp} = None</msg>
+<status status="PASS" endtime="20170207 10:36:08.836" starttime="20170207 10:36:08.836"></status>
+</kw>
+<kw name="Get As List" library="ATFCommonsWrapper">
+<arguments>
+<arg>${tmp}</arg>
+</arguments>
+<assign>
+<var>${list}</var>
+</assign>
+<msg timestamp="20170207 10:36:08.837" level="INFO">&lt;lambda&gt; - None</msg>
+<msg timestamp="20170207 10:36:08.837" level="INFO">${list} = []</msg>
+<status status="PASS" endtime="20170207 10:36:08.837" starttime="20170207 10:36:08.836"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>'${list}'</arg>
+<arg>'[]'</arg>
+</arguments>
+<status status="PASS" endtime="20170207 10:36:08.837" starttime="20170207 10:36:08.837"></status>
+</kw>
+<status status="PASS" endtime="20170207 10:36:08.837" critical="yes" starttime="20170207 10:36:08.835"></status>
+</test>
+<test id="s1-t9" name="gal9">
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>${None}</arg>
+</arguments>
+<assign>
+<var>${tmp}</var>
+</assign>
+<msg timestamp="20170207 10:36:08.838" level="INFO">${tmp} = None</msg>
+<status status="PASS" endtime="20170207 10:36:08.838" starttime="20170207 10:36:08.838"></status>
+</kw>
+<kw name="Get As List" library="ATFCommonsWrapper">
+<arguments>
+<arg>${tmp}</arg>
+</arguments>
+<assign>
+<var>${list}</var>
+</assign>
+<msg timestamp="20170207 10:36:08.839" level="INFO">&lt;lambda&gt; - None</msg>
+<msg timestamp="20170207 10:36:08.839" level="INFO">${list} = []</msg>
+<status status="PASS" endtime="20170207 10:36:08.839" starttime="20170207 10:36:08.838"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>'${list}'</arg>
+<arg>'[]'</arg>
+</arguments>
+<status status="PASS" endtime="20170207 10:36:08.840" starttime="20170207 10:36:08.839"></status>
+</kw>
+<status status="PASS" endtime="20170207 10:36:08.840" critical="yes" starttime="20170207 10:36:08.838"></status>
+</test>
+<test id="s1-t10" name="gal10">
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>${EMPTY}</arg>
+</arguments>
+<assign>
+<var>${tmp}</var>
+</assign>
+<msg timestamp="20170207 10:36:08.840" level="INFO">${tmp} = </msg>
+<status status="PASS" endtime="20170207 10:36:08.840" starttime="20170207 10:36:08.840"></status>
+</kw>
+<kw name="Get As List" library="ATFCommonsWrapper">
+<arguments>
+<arg>${tmp}</arg>
+</arguments>
+<assign>
+<var>${list}</var>
+</assign>
+<msg timestamp="20170207 10:36:08.841" level="INFO">&lt;lambda&gt; -</msg>
+<msg timestamp="20170207 10:36:08.841" level="INFO">${list} = ['']</msg>
+<status status="PASS" endtime="20170207 10:36:08.841" starttime="20170207 10:36:08.841"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>@{list}[0]</arg>
+<arg>${EMPTY}</arg>
+</arguments>
+<status status="PASS" endtime="20170207 10:36:08.842" starttime="20170207 10:36:08.842"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<assign>
+<var>${tmp}</var>
+</assign>
+<msg timestamp="20170207 10:36:08.842" level="INFO">${tmp} = </msg>
+<status status="PASS" endtime="20170207 10:36:08.842" starttime="20170207 10:36:08.842"></status>
+</kw>
+<kw name="Get As List" library="ATFCommonsWrapper">
+<arguments>
+<arg>${tmp}</arg>
+</arguments>
+<assign>
+<var>${list}</var>
+</assign>
+<msg timestamp="20170207 10:36:08.843" level="INFO">&lt;lambda&gt; -</msg>
+<msg timestamp="20170207 10:36:08.843" level="INFO">${list} = ['']</msg>
+<status status="PASS" endtime="20170207 10:36:08.843" starttime="20170207 10:36:08.842"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>@{list}[0]</arg>
+<arg>${EMPTY}</arg>
+</arguments>
+<status status="PASS" endtime="20170207 10:36:08.844" starttime="20170207 10:36:08.843"></status>
+</kw>
+<status status="PASS" endtime="20170207 10:36:08.844" critical="yes" starttime="20170207 10:36:08.840"></status>
+</test>
+<status status="PASS" endtime="20170207 10:36:08.844" starttime="20170207 10:36:07.241"></status>
+</suite>
+<statistics>
+<total>
+<stat fail="0" pass="10">Critical Tests</stat>
+<stat fail="0" pass="10">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat fail="0" id="s1" name="Atfcommons Wrap" pass="10">Atfcommons Wrap</stat>
+</suite>
+</statistics>
+<errors>
+<msg timestamp="20170207 10:36:08.827" level="WARN">Giving keys and values separately to 'Create Dictionary' keyword is deprecated. Use 'key=value' syntax instead.</msg>
+<msg timestamp="20170207 10:36:08.829" level="WARN">Giving keys and values separately to 'Create Dictionary' keyword is deprecated. Use 'key=value' syntax instead.</msg>
+</errors>
+</robot>

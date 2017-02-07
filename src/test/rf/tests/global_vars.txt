@@ -1,0 +1,378 @@
+*** Settings ***
+Documentation   	Resource file for global variables
+
+*** Variables ***
+##################################################################################
+#
+#   #######  #     #  #######   #####         #####   #######  ######   #
+#   #         #   #   #        #     #       #     #     #     #     #  #
+#   #          # #    #        #             #           #     #     #  #
+#   #####       #     #####    #             #           #     ######   #
+#   #          # #    #        #             #           #     #   #    #
+#   #         #   #   #        #     #       #     #     #     #    #   #
+#   #######  #     #  #######   #####         #####      #     #     #  #######
+#
+##################################################################################
+### Execution Control - common part START
+## Generic
+# Running in dummy mode - e.g. using dummy hosts and/or dummy commands
+${DUMMY_MODE}               True
+
+# Execution mode - Development mode. Faster execution due to skipping time consuming steps (verify that handset has coverage/is registedted)
+${DEVELOPMENT_MODE}         True
+${DBG_LOG}                  True
+${DBG_LEVEL}                INFO
+
+# Skip Verification Steps - NOTE: tcpdump (Trace) & sendspml will still be executed, only result verification will be skipped
+${SKIP_TRACE}           False
+${SKIP_SPML}            False
+
+# Ignore Errors During Tests
+${IGNORE_ERR_TRACE}     False
+${IGNORE_ERR_SPML}      False
+${IGNORE_ERR_MANUAL}    False    # ignore errors in manual steps valid only if ${DLGS_SKIP}=True
+
+## Manual Steps/ Dialogs
+# Skip Manual Step
+${DLGS_SKIP}            True
+# when skipping, should the Test Case Fail - default, can be overrriden per test case
+${DLGS_FAIL_ON_SKIP}    False
+# When skipping, how long should we sleep (e.g. wait until the call to PSTN starts to ring)
+# must be at least 20s - otherwise the VMS menu is not ready for the next steps
+# Can be overwritten in the tests using dialogs.
+${DLGS_SLEEP}           20s
+
+## Handset Control
+# Default call setup timeouts
+${CALL_TOUT}            20s
+${SMS_TOUT}             60s
+${USSD_TOUT}            20s
+
+${CALL_TOUT_ROAM}       120s
+${SMS_TOUT_ROAM}        180s
+
+# Default speaker behaviour
+${DEF_SPEAKER}          True
+
+## Network elements
+# SMSC timeout (e.g. for setting the MSGWAIT flags)
+${SMSC_TOUT}            90s
+# Who called service SMS timeout 
+${WHC_TOUT}             90s
+# VMS Menu sleep time (between sendingDTMF)
+${VMS_DTMF_SLEEP}       2s
+# how many voice messages should be deleted - mailbox should be empty, otherwise the tests will fail
+${VMS_DEL_MSG}          20
+
+## results
+${RESULTS_ROOT_PATH}    ${EXECDIR}${/}results${/}
+
+## ISD wait - how long to wait for ISDs before continuing execution (e.g. wait after SPML change before stopping trace)
+## Needed if the primary notification target in OneNDS is not reachable it takes ~15second before the retry happens 
+## if the wait is not long enough the ISD will not be in the trace and the TC will fail.
+${ISD_WAIT}             20s
+
+### Execution Control - common part END
+
+### Execution Control - project specific part START
+
+### Execution Control - project specific part END
+
+
+
+####################################################
+#
+#   #######  ######      #      #####   #######
+#      #     #     #    # #    #     #  #
+#      #     #     #   #   #   #        #
+#      #     ######   #     #  #        #####
+#      #     #   #    #######  #        #
+#      #     #    #   #     #  #     #  #
+#      #     #     #  #     #   #####   #######
+#
+####################################################
+@{NSR_QOS_8}=   Delay class 3    Reliability class.*3    Peak throughput.*256 000    Precedence class: Normal    Mean throughput: Best effort    Retention priority: 2    Traffic class: Interactive    Delivery order: Streaming      Delivery of erroneous SDUs.*3    Maximum SDU size: 1500    Maximum.*uplink.*8640    Maximum.*downlink.*8640    BER.*7    SDU error ratio.*4     Transfer delay.*62    Traffic handling priority.*2    Guaranteed.*uplink.*: 1    Guaranteed.*downlink.*: 1
+@{NSR_QOS_4}=   Delay class 3    Reliability class.*3    Peak throughput.*256 000    Precedence class: Normal    Mean throughput: Best effort    Retention priority: 2    Traffic class: Interactive    Delivery order: Streaming      Delivery of erroneous SDUs.*3    Maximum SDU size: 1500    Maximum.*uplink.*6144    Maximum.*downlink.*7424    BER.*7    SDU error ratio.*4     Transfer delay.*62    Traffic handling priority.*2    Guaranteed.*uplink.*: 1    Guaranteed.*downlink.*: 1
+
+@{POST_ISD_PDP_1}=   Component: invoke    localValue: insertSubscriberData    pdp-ContextId: 1      APN: internet-tb                @{NSR_QOS_8}
+@{POST_ISD_PDP_2}=   Component: invoke    localValue: insertSubscriberData    pdp-ContextId: 2      APN: wap-tb.viaginterkom.de     @{NSR_QOS_4}
+
+
+#########################################
+#
+#    #####   #     #  ######    #####
+#   #     #  #     #  #     #  #     #
+#   #        #     #  #     #  #
+#    #####   #     #  ######    #####
+#         #  #     #  #     #        #
+#   #     #  #     #  #     #  #     #
+#    #####    #####   ######    #####
+#
+#########################################
+# NOTE
+# For clarity prefix the _IMSI & _MSISDN variable using the device alias names, 
+# this makes the test scripts more readable e.g. 
+#     ${MsA}=             device_alias1
+#     ${MsB}=             device_alias1
+#     Initiate Device     ${MsA}
+#     Initiate Device     ${MsB}
+#     Send SMS            ${MsA}       ${${MsB}_MSISDN}     My SMS Text
+
+
+## T e s t   S u b s c r i b e r s
+# The "dummy" ones are used for the real calls
+# Others are used for provisioning and traces
+${MsDemo1_IMSI}             262074900001148   # Prepaid1
+${MsDemo1_ISDN}             4917607011148
+${MsDemo1_dummy_ISDN}       4917672646464
+${MsDemo2_IMSI}             262073900302977   # Postpaid1
+${MsDemo2_ISDN}             4917607011477
+#${MsDemo2_dummy_ISDN}       491793000333      # voicemail
+${MsDemo2_dummy_ISDN}       358466588968      # Elisa.fi
+${MsDemo3_IMSI}             262073900302979   # Postpaid2
+${MsDemo3_ISDN}             4917607011479
+
+${DUMMY_FTN}                4917607011478
+
+#########################################################
+#
+#     ###   #####   ######   #     #
+#      #   #     #  #     #  ##    #
+#      #   #        #     #  # #   #
+#      #    #####   #     #  #  #  #
+#      #         #  #     #  #   # #
+#      #   #     #  #     #  #    ##
+#     ###   #####   ######   #     #
+#
+#########################################################
+## Numbers
+# Voicemail
+${NBR_VOICEMAIL_SHORT}          333
+${NBR_VOICEMAIL_LONG}           491793000333
+# This number is called to keep one line busy (e.g. one MC member makes an MOC call to this nbr)
+${NBR_KEEPCONNECTED}            ${NBR_VOICEMAIL_SHORT}
+# These numbers are used as premium number (e.g. call forwarding not allowed)
+${NBR_PREMIUM}                  49176454545
+${NBR_0180_PREMIUM}             49180553399000
+# This number is used as PSTN number (e.g. call forwarding to PSTN)
+${NBR_PSTN}                     498924422470
+# Who called FTN (i.e. CFD)
+${NBR_WHOCALLED}                491793000400
+# This number is used when a call to international should be made (e.g to test barrings)
+# Number is for Austrian Avalance Warning Service 
+${NBR_INTERN}                   43055742011588
+# ISDN to add as "Prohibited FTN" in the NSR
+${NBR_PROHIBITED_FTN}           491590330102120
+
+## VLR
+${VLR_ISDN}                     491760000004
+## SCF
+${SCF_ISDN}                     491760000398
+${SCF_BOGUS}                    491760000666
+## VMS
+${VMS_ISDN}                     491760000702
+## SMSC
+${SMSC_ISDN}                    491760000508
+${PROXY_SMSC_ISDN}              491760000555
+
+#########################################################
+#
+#       #     #   #####    #####   ######
+#       #     #  #     #  #     #  #     #
+#       #     #  #        #        #     #
+#       #     #   #####    #####   #     #
+#       #     #        #        #  #     #
+#       #     #  #     #  #     #  #     #
+#        #####    #####    #####   ######
+#
+#########################################################
+# call forwarding
+${USSD_CFU_REG}                \**21*   # when using remember to add FTN and # = +"<FTN>#"
+${USSD_CFU_ACT}                \*21#
+${USSD_CFU_DACT}               \#21#
+${USSD_CFU_DEL}                \##21#
+${USSD_CFU_READ}               \*#21#
+${USSD_CFNRY_REG}              \**61*   # when using remember to add FTN & optional delay = +"FTN*DELAY#"
+${USSD_CFNRY_ACT}              \*61#
+${USSD_CFNRY_DACT}             \#61#
+${USSD_CFNRY_DEL}              \##61#
+${USSD_CFNRY_READ}             \*#61#
+${USSD_CFNRC_REG}              \**62*   # when using remember to add FTN and # = +"<FTN>#"
+${USSD_CFNRC_ACT}              \*62#
+${USSD_CFNRC_DACT}             \#62#
+${USSD_CFNRC_DEL}              \##62#
+${USSD_CFNRC_READ}             \*#62#
+${USSD_CFB_REG}                \**67*   # when using remember to add FTN and # = +"<FTN>#"
+${USSD_CFB_ACT}                \*67#
+${USSD_CFB_DACT}               \#67#
+${USSD_CFB_DEL}                \##67#
+${USSD_CFB_READ}               \*#67#
+
+${USSD_CF_ALLCOND_REG}         \**004*  # when using remember to add FTN and # = +"<FTN>#"
+${USSD_CF_ALLCOND_ACT}         \*004#
+${USSD_CF_ALLCOND_DACT}        \#004#
+${USSD_CF_ALLCOND_DEL}         \##004#
+${USSD_CF_ALLCOND_READ}        \*#004#
+
+${USSD_CF_ALL_REG}             \**002*  # when using remember to add FTN and # = +"<FTN>#"
+${USSD_CF_ALL_ACT}             \*002#
+${USSD_CF_ALL_DACT}            \#002#
+${USSD_CF_ALL_DEL}             \##002#
+${USSD_CF_ALL_READ}            \*#002#
+
+${USSD_CF_TIMER}               10      # working ones 10, 20, 25
+
+# call waiting
+${USSD_CAW_ACT}                \*43#
+${USSD_CAW_DACT}               \#43#
+${USSD_CAW_READ}               \*#43#
+
+# call barring
+${USSD_BAOC_ACT}               \*33*0000#
+${USSD_BAOC_DACT}              \#33*0000#
+${USSD_BAOC_READ}              \*#33#
+${USSD_BAIC_ACT}               \*35*0000#
+${USSD_BAIC_DACT}              \#35*0000#
+${USSD_BAIC_READ}              \*#35#
+${USSD_BOIC_ACT}               \*331*0000#
+${USSD_BOIC_DACT}              \#331*0000#
+${USSD_BOIC_READ}              \*#331#
+${USSD_BICROAM_ACT}            \*351*0000#
+${USSD_BICROAM_DACT}           \#351*0000#
+${USSD_BICROAM_READ}           \*#351#
+
+# CLIP
+${USSD_CLIP_ACT}               \*30#
+${USSD_CLIP_DACT}              \#30#
+#${USSD_CLIP_READ}             \*#30#
+
+# CLIR
+${USSD_CLIR_ACT}               \*31#
+${USSD_CLIR_DACT}              \#31#
+#${USSD_CLIR_READ}             \*#31#
+
+# USSD messages (displayed in the pop-up on the device)
+${USSD_MSG_ERROR}				invalid
+${USSD_MSG_CF_READ_NFWD}        Voice: Not forwarded
+${USSD_MSG_CF_READ_WHC}         Voice: +${NBR_WHOCALLED}
+${USSD_MSG_CF_DACT_OK}			Service has been disabled
+${USSD_MSG_CF_DEL_OK}			Erase successful
+${USSD_MSG_CF_ACT_OK}			Service was enabled
+${USSD_MSG_CF_REG_OK}			Registration was successful
+${USSD_MSG_B_ACT_OK}            Service was enabled
+${USSD_MSG_B_DACT_OK}           Service has been disabled
+${USSD_MSG_CAW_ACT_OK}          Service was enabled
+${USSD_MSG_CAW_DACT_OK}         Service has been disabled
+${USSD_MSG_CLIP_ACT_OK}         Service was enabled
+${USSD_MSG_CLIP_DACT_OK}        Service has been disabled
+${USSD_MSG_CLIR_ACT_OK}         Service was enabled
+${USSD_MSG_CLIR_DACT_OK}        Service has been disabled
+
+
+#########################################
+#
+#        #####    #####   #     #
+#       #     #  #     #  #     #
+#       #        #        #     #
+#        #####    #####   #######
+#             #        #  #     #
+#       #     #  #     #  #     #
+#        #####    #####   #     #
+#
+#########################################
+## SSH prompt i.e. string/character that will be used in reading the SSH output (e.g. after login and "read until prompt" methods)
+${SSHPROMPT}                $
+
+# ta test user account
+${user}                     ta
+${passwd}                   ta1234
+
+# directory where to upload the example traces on the SSH host (localhost)
+# the files will be copied from this directory to the directory where tcpdump would generate them
+# i.e. ${TRC_PATH_VAL} location (as defined in the wireshark library)
+${TRC_SSH_USR_PATH}         ta/trace/
+# local example traces
+${TRC_LPATH}                    ${EXECDIR}${/}data${/}wireshark${/}
+${TRC_GSM_MAP_000_PCAP_FILE}    trace_a.pcap
+${TRC_GSM_MAP_001_PCAP_FILE}    trace_b.pcap
+
+# directory where to upload the dummy SPML outputs on the SSH host (localhost)
+# the files will be copied from this directory to the directory where sendspml would generate them
+# i.e. ${SPML_LOG_PATH} location (as defined in the sendspml library)
+${DUMMY_SPML_SSH_USR_PATH}  ta/spml/
+${DUMMY_SPML_LPATH}         ${EXECDIR}${/}data${/}spml${/}
+
+
+###################################################################
+#
+#     ######   #######  #     #  ###   #####   #######   #####
+#     #     #  #        #     #   #   #     #  #        #     #
+#     #     #  #        #     #   #   #        #        #
+#     #     #  #####    #     #   #   #        #####     #####
+#     #     #  #         #   #    #   #        #              #
+#     #     #  #          # #     #   #     #  #        #     #
+#     ######   #######     #     ###   #####   #######   #####
+#
+###################################################################
+### D E V I C E S
+## A P P I U M
+# Host where the appium server is running for each device:
+${DEV_1_HOST}             127.0.0.1
+${DEV_2_HOST}             127.0.0.1
+${DEV_3_HOST}             127.0.0.1
+${DEV_4_HOST}             127.0.0.1
+${DEV_5_HOST}             127.0.0.1
+${DEV_6_HOST}             127.0.0.1
+# Port of the appium server for each device:
+${DEV_1_PORT}             4723
+${DEV_2_PORT}             4724
+${DEV_3_PORT}             4725
+${DEV_4_PORT}             4726
+${DEV_5_PORT}             4727
+${DEV_6_PORT}             4728
+
+# IMEI + S/N for reference, not used in the scripts:
+# 865170025799490 + A3B7N15113003743
+# 865170025801841 + A3B7N15113003978
+
+# Unique Device ID's: 
+# Huawei Y550_L01       581f28941788           device product:Y550-L01 model:HUAWEI_Y550_L01 device:hwY550-L01
+# Huawei Y550_L01       581f2894169d           device product:Y550-L01 model:HUAWEI_Y550_L01 device:hwY550-L01
+# Huawei Y550_L01       68a0f6150c87           device product:Y550-L01 model:HUAWEI_Y550_L01 device:hwY550-L01
+# Huawei Y550_L01       80717aef8315           device product:Y550-L01 model:HUAWEI_Y550_L01 device:hwY550-L01
+# Huawei Y530_U00       3cdfbd8ffa9e
+# Huawei G7_L01         68a0f6f98801
+# Motorola XT910        0A3BC3C21901800A
+${DEV_1_UDID}             68a0f6150c87   	# MsDemo1
+${DEV_2_UDID}             80717aef8315      # MsDemo2
+${DEV_3_UDID}             no device 		# xxx
+${DEV_4_UDID}             no device   	    # xxx
+${DEV_5_UDID}             no device 		# xxx
+${DEV_6_UDID}             no device 		# xxx
+${DEV_X_UDID}             no device         # xxx
+
+# These must match with one of the keys in the 
+# devices dictionary defined in the ngin_handset_ctrl_var.py
+${DEV_1_DEVICE}           huawei_Y550_L01   	# MsDemo1
+${DEV_2_DEVICE}           huawei_Y550_L01 		# MsDemo2
+${DEV_3_DEVICE}           no device             # xxx
+${DEV_4_DEVICE}           no device             # xxx
+${DEV_5_DEVICE}           no device             # xxx
+${DEV_6_DEVICE}           no device             # xxx
+${DEV_X_UDID}             no device             # xxx
+# huawei_Y530_U00
+# huawei_Y550_L01
+# samsung_galaxy4_GT_I9505_en
+# sony_xperia_z1_C6903
+# huawei_Y530_U00
+# samsung_galaxy4_GT_I9505_de
+# huawei_G7_L01_en
+
+# Device Alias Mapping
+# TODO:
+# define the dictionary already here as soon as robot support dictionaries (issue #1450) in the variables section
+# (and remove the dictionary creation from "device setup" in device_ctrl.txt)
+@{ALIAS_LIST}           MsDemo1   MsDemo2   MsNone    MsNone
+@{DEV_LIST}             DEV_1     DEV_2     DEV_3     DEV_4
+
+*** Keywords ***

@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generated="20151129 12:45:17.959" generator="Robot 2.8.7 (Python 2.7.10 on win32)">
+<suite source="C:\opt\pkral\repo\taTest\src\atfcommons_wrap.robot" id="s1" name="Atfcommons Wrap">
+<test id="s1-t1" name="gal1">
+<kw type="kw" name="${tmp} = BuiltIn.Create List">
+<doc>Returns a list containing given items.</doc>
+<arguments>
+<arg>lst1</arg>
+<arg>lst2</arg>
+<arg>lst3</arg>
+<arg>lst4</arg>
+</arguments>
+<msg timestamp="20151129 12:45:18.072" level="INFO">${tmp} = [u'lst1', u'lst2', u'lst3', u'lst4']</msg>
+<status status="PASS" endtime="20151129 12:45:18.071" starttime="20151129 12:45:18.071"></status>
+</kw>
+<kw type="kw" name="${list} = ATFCommonsWrapper.Get As List">
+<doc></doc>
+<arguments>
+<arg>${tmp}</arg>
+</arguments>
+<msg timestamp="20151129 12:45:18.105" level="INFO">&lt;lambda&gt; - [u'lst1', u'lst2', u'lst3', u'lst4']</msg>
+<msg timestamp="20151129 12:45:18.105" level="INFO">${list} = [u'lst1', u'lst2', u'lst3', u'lst4']</msg>
+<status status="PASS" endtime="20151129 12:45:18.105" starttime="20151129 12:45:18.072"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Should Be Equal">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>@{list}[0]</arg>
+<arg>lst1</arg>
+</arguments>
+<msg timestamp="20151129 12:45:18.106" level="INFO">Argument types are:
+&lt;type 'unicode'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" endtime="20151129 12:45:18.106" starttime="20151129 12:45:18.105"></status>
+</kw>
+<doc></doc>
+<tags>
+</tags>
+<status status="PASS" endtime="20151129 12:45:18.106" critical="yes" starttime="20151129 12:45:18.070"></status>
+</test>
+<test id="s1-t2" name="gal2">
+<kw type="kw" name="${tmp} = BuiltIn.Create List">
+<doc>Returns a list containing given items.</doc>
+<arguments>
+<arg>lst1</arg>
+</arguments>
+<msg timestamp="20151129 12:45:18.108" level="INFO">${tmp} = [u'lst1']</msg>
+<status status="PASS" endtime="20151129 12:45:18.108" starttime="20151129 12:45:18.107"></status>
+</kw>
+<kw type="kw" name="${list} = ATFCommonsWrapper.Get As List">
+<doc></doc>
+<arguments>
+<arg>${tmp}</arg>
+</arguments>
+<msg timestamp="20151129 12:45:18.113" level="INFO">&lt;lambda&gt; - [u'lst1']</msg>
+<msg timestamp="20151129 12:45:18.113" level="INFO">${list} = [u'lst1']</msg>
+<status status="PASS" endtime="20151129 12:45:18.113" starttime="20151129 12:45:18.108"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Should Be Equal">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>@{list}[0]</arg>
+<arg>lst1</arg>
+</arguments>
+<msg timestamp="20151129 12:45:18.114" level="INFO">Argument types are:
+&lt;type 'unicode'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" endtime="20151129 12:45:18.115" starttime="20151129 12:45:18.114"></status>
+</kw>
+<doc></doc>
+<tags>
+</tags>
+<status status="PASS" endtime="20151129 12:45:18.115" critical="yes" starttime="20151129 12:45:18.107"></status>
+</test>
+<test id="s1-t3" name="gal3">
+<kw type="kw" name="${tmp} = BuiltIn.Set Variable">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>lst1</arg>
+</arguments>
+<msg timestamp="20151129 12:45:18.117" level="INFO">${tmp} = lst1</msg>
+<status status="PASS" endtime="20151129 12:45:18.116" starttime="20151129 12:45:18.116"></status>
+</kw>
+<kw type="kw" name="${list} = ATFCommonsWrapper.Get As List">
+<doc></doc>
+<arguments>
+<arg>${tmp}</arg>
+</arguments>
+<msg timestamp="20151129 12:45:18.121" level="INFO">&lt;lambda&gt; - lst1</msg>
+<msg timestamp="20151129 12:45:18.122" level="INFO">${list} = [u'lst1']</msg>
+<status status="PASS" endtime="20151129 12:45:18.121" starttime="20151129 12:45:18.117"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Should Be Equal">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>@{list}[0]</arg>
+<arg>lst1</arg>
+</arguments>
+<msg timestamp="20151129 12:45:18.122" level="INFO">Argument types are:
+&lt;type 'unicode'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" endtime="20151129 12:45:18.122" starttime="20151129 12:45:18.122"></status>
+</kw>
+<doc></doc>
+<tags>
+</tags>
+<status status="PASS" endtime="20151129 12:45:18.123" critical="yes" starttime="20151129 12:45:18.115"></status>
+</test>
+<test id="s1-t4" name="gal4">
+<kw type="kw" name="${tmp} = Collections.Create Dictionary">
+<doc>Creates and returns a dictionary based on given items.</doc>
+<arguments>
+<arg>lst1</arg>
+<arg>lst2</arg>
+<arg>lst3</arg>
+<arg>lst4</arg>
+</arguments>
+<msg timestamp="20151129 12:45:18.124" level="INFO">${tmp} = {u'lst3': u'lst4', u'lst1': u'lst2'}</msg>
+<status status="PASS" endtime="20151129 12:45:18.124" starttime="20151129 12:45:18.124"></status>
+</kw>
+<kw type="kw" name="${list} = ATFCommonsWrapper.Get As List">
+<doc></doc>
+<arguments>
+<arg>${tmp}</arg>
+</arguments>
+<msg timestamp="20151129 12:45:18.129" level="INFO">&lt;lambda&gt; - {u'lst3': u'lst4', u'lst1': u'lst2'}</msg>
+<msg timestamp="20151129 12:45:18.130" level="INFO">${list} = [u'lst1', u'lst3']</msg>
+<status status="PASS" endtime="20151129 12:45:18.129" starttime="20151129 12:45:18.124"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Should Be Equal">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>@{list}[0]</arg>
+<arg>lst1</arg>
+</arguments>
+<msg timestamp="20151129 12:45:18.130" level="INFO">Argument types are:
+&lt;type 'unicode'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" endtime="20151129 12:45:18.130" starttime="20151129 12:45:18.130"></status>
+</kw>
+<doc></doc>
+<tags>
+</tags>
+<status status="PASS" endtime="20151129 12:45:18.131" critical="yes" starttime="20151129 12:45:18.123"></status>
+</test>
+<test id="s1-t5" name="gal5">
+<kw type="kw" name="${tmp} = Collections.Create Dictionary">
+<doc>Creates and returns a dictionary based on given items.</doc>
+<arguments>
+<arg>lst1</arg>
+<arg>lst2</arg>
+</arguments>
+<msg timestamp="20151129 12:45:18.132" level="INFO">${tmp} = {u'lst1': u'lst2'}</msg>
+<status status="PASS" endtime="20151129 12:45:18.132" starttime="20151129 12:45:18.132"></status>
+</kw>
+<kw type="kw" name="${list} = ATFCommonsWrapper.Get As List">
+<doc></doc>
+<arguments>
+<arg>${tmp}</arg>
+</arguments>
+<msg timestamp="20151129 12:45:18.137" level="INFO">&lt;lambda&gt; - {u'lst1': u'lst2'}</msg>
+<msg timestamp="20151129 12:45:18.137" level="INFO">${list} = [u'lst1']</msg>
+<status status="PASS" endtime="20151129 12:45:18.137" starttime="20151129 12:45:18.133"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Should Be Equal">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>@{list}[0]</arg>
+<arg>lst1</arg>
+</arguments>
+<msg timestamp="20151129 12:45:18.138" level="INFO">Argument types are:
+&lt;type 'unicode'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" endtime="20151129 12:45:18.138" starttime="20151129 12:45:18.138"></status>
+</kw>
+<doc></doc>
+<tags>
+</tags>
+<status status="PASS" endtime="20151129 12:45:18.138" critical="yes" starttime="20151129 12:45:18.131"></status>
+</test>
+<test id="s1-t6" name="gal6">
+<kw type="kw" name="${tmp} = BuiltIn.Create List">
+<doc>Returns a list containing given items.</doc>
+<arguments>
+</arguments>
+<msg timestamp="20151129 12:45:18.140" level="INFO">${tmp} = []</msg>
+<status status="PASS" endtime="20151129 12:45:18.139" starttime="20151129 12:45:18.139"></status>
+</kw>
+<kw type="kw" name="${list} = ATFCommonsWrapper.Get As List">
+<doc></doc>
+<arguments>
+<arg>${tmp}</arg>
+</arguments>
+<msg timestamp="20151129 12:45:18.145" level="INFO">&lt;lambda&gt; - []</msg>
+<msg timestamp="20151129 12:45:18.145" level="INFO">${list} = []</msg>
+<status status="PASS" endtime="20151129 12:45:18.145" starttime="20151129 12:45:18.140"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Should Be Equal">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>'${list}'</arg>
+<arg>'[]'</arg>
+</arguments>
+<msg timestamp="20151129 12:45:18.146" level="INFO">Argument types are:
+&lt;type 'unicode'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" endtime="20151129 12:45:18.146" starttime="20151129 12:45:18.145"></status>
+</kw>
+<doc></doc>
+<tags>
+</tags>
+<status status="PASS" endtime="20151129 12:45:18.146" critical="yes" starttime="20151129 12:45:18.138"></status>
+</test>
+<test id="s1-t7" name="gal7">
+<kw type="kw" name="${tmp} = Collections.Create Dictionary">
+<doc>Creates and returns a dictionary based on given items.</doc>
+<arguments>
+</arguments>
+<msg timestamp="20151129 12:45:18.147" level="INFO">${tmp} = {}</msg>
+<status status="PASS" endtime="20151129 12:45:18.147" starttime="20151129 12:45:18.147"></status>
+</kw>
+<kw type="kw" name="${list} = ATFCommonsWrapper.Get As List">
+<doc></doc>
+<arguments>
+<arg>${tmp}</arg>
+</arguments>
+<msg timestamp="20151129 12:45:18.152" level="INFO">&lt;lambda&gt; - {}</msg>
+<msg timestamp="20151129 12:45:18.152" level="INFO">${list} = []</msg>
+<status status="PASS" endtime="20151129 12:45:18.152" starttime="20151129 12:45:18.148"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Should Be Equal">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>'${list}'</arg>
+<arg>'[]'</arg>
+</arguments>
+<msg timestamp="20151129 12:45:18.153" level="INFO">Argument types are:
+&lt;type 'unicode'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" endtime="20151129 12:45:18.153" starttime="20151129 12:45:18.153"></status>
+</kw>
+<doc></doc>
+<tags>
+</tags>
+<status status="PASS" endtime="20151129 12:45:18.153" critical="yes" starttime="20151129 12:45:18.146"></status>
+</test>
+<test id="s1-t8" name="gal8">
+<kw type="kw" name="${tmp} = BuiltIn.Set Variable">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>${null}</arg>
+</arguments>
+<msg timestamp="20151129 12:45:18.155" level="INFO">${tmp} = None</msg>
+<status status="PASS" endtime="20151129 12:45:18.154" starttime="20151129 12:45:18.154"></status>
+</kw>
+<kw type="kw" name="${list} = ATFCommonsWrapper.Get As List">
+<doc></doc>
+<arguments>
+<arg>${tmp}</arg>
+</arguments>
+<msg timestamp="20151129 12:45:18.159" level="INFO">&lt;lambda&gt; - None</msg>
+<msg timestamp="20151129 12:45:18.159" level="INFO">${list} = []</msg>
+<status status="PASS" endtime="20151129 12:45:18.159" starttime="20151129 12:45:18.155"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Should Be Equal">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>'${list}'</arg>
+<arg>'[]'</arg>
+</arguments>
+<msg timestamp="20151129 12:45:18.160" level="INFO">Argument types are:
+&lt;type 'unicode'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" endtime="20151129 12:45:18.160" starttime="20151129 12:45:18.160"></status>
+</kw>
+<doc></doc>
+<tags>
+</tags>
+<status status="PASS" endtime="20151129 12:45:18.160" critical="yes" starttime="20151129 12:45:18.153"></status>
+</test>
+<test id="s1-t9" name="gal9">
+<kw type="kw" name="${tmp} = BuiltIn.Set Variable">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>${None}</arg>
+</arguments>
+<msg timestamp="20151129 12:45:18.162" level="INFO">${tmp} = None</msg>
+<status status="PASS" endtime="20151129 12:45:18.162" starttime="20151129 12:45:18.162"></status>
+</kw>
+<kw type="kw" name="${list} = ATFCommonsWrapper.Get As List">
+<doc></doc>
+<arguments>
+<arg>${tmp}</arg>
+</arguments>
+<msg timestamp="20151129 12:45:18.167" level="INFO">&lt;lambda&gt; - None</msg>
+<msg timestamp="20151129 12:45:18.167" level="INFO">${list} = []</msg>
+<status status="PASS" endtime="20151129 12:45:18.167" starttime="20151129 12:45:18.162"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Should Be Equal">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>'${list}'</arg>
+<arg>'[]'</arg>
+</arguments>
+<msg timestamp="20151129 12:45:18.168" level="INFO">Argument types are:
+&lt;type 'unicode'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" endtime="20151129 12:45:18.168" starttime="20151129 12:45:18.167"></status>
+</kw>
+<doc></doc>
+<tags>
+</tags>
+<status status="PASS" endtime="20151129 12:45:18.168" critical="yes" starttime="20151129 12:45:18.161"></status>
+</test>
+<test id="s1-t10" name="gal10">
+<kw type="kw" name="${tmp} = BuiltIn.Set Variable">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>${EMPTY}</arg>
+</arguments>
+<msg timestamp="20151129 12:45:18.169" level="INFO">${tmp} = </msg>
+<status status="PASS" endtime="20151129 12:45:18.169" starttime="20151129 12:45:18.169"></status>
+</kw>
+<kw type="kw" name="${list} = ATFCommonsWrapper.Get As List">
+<doc></doc>
+<arguments>
+<arg>${tmp}</arg>
+</arguments>
+<msg timestamp="20151129 12:45:18.174" level="INFO">&lt;lambda&gt; -</msg>
+<msg timestamp="20151129 12:45:18.174" level="INFO">${list} = ['']</msg>
+<status status="PASS" endtime="20151129 12:45:18.174" starttime="20151129 12:45:18.170"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Should Be Equal">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>@{list}[0]</arg>
+<arg>${EMPTY}</arg>
+</arguments>
+<msg timestamp="20151129 12:45:18.175" level="INFO">Argument types are:
+&lt;type 'str'&gt;
+&lt;type 'str'&gt;</msg>
+<status status="PASS" endtime="20151129 12:45:18.175" starttime="20151129 12:45:18.174"></status>
+</kw>
+<kw type="kw" name="${tmp} = BuiltIn.Set Variable">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+</arguments>
+<msg timestamp="20151129 12:45:18.175" level="INFO">${tmp} = </msg>
+<status status="PASS" endtime="20151129 12:45:18.175" starttime="20151129 12:45:18.175"></status>
+</kw>
+<kw type="kw" name="${list} = ATFCommonsWrapper.Get As List">
+<doc></doc>
+<arguments>
+<arg>${tmp}</arg>
+</arguments>
+<msg timestamp="20151129 12:45:18.181" level="INFO">&lt;lambda&gt; -</msg>
+<msg timestamp="20151129 12:45:18.181" level="INFO">${list} = ['']</msg>
+<status status="PASS" endtime="20151129 12:45:18.181" starttime="20151129 12:45:18.176"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Should Be Equal">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>@{list}[0]</arg>
+<arg>${EMPTY}</arg>
+</arguments>
+<msg timestamp="20151129 12:45:18.182" level="INFO">Argument types are:
+&lt;type 'str'&gt;
+&lt;type 'str'&gt;</msg>
+<status status="PASS" endtime="20151129 12:45:18.182" starttime="20151129 12:45:18.181"></status>
+</kw>
+<doc></doc>
+<tags>
+</tags>
+<status status="PASS" endtime="20151129 12:45:18.182" critical="yes" starttime="20151129 12:45:18.168"></status>
+</test>
+<doc></doc>
+<metadata>
+</metadata>
+<status status="PASS" endtime="20151129 12:45:18.183" starttime="20151129 12:45:17.959"></status>
+</suite>
+<statistics>
+<total>
+<stat fail="0" pass="10">Critical Tests</stat>
+<stat fail="0" pass="10">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat fail="0" pass="10" id="s1" name="Atfcommons Wrap">Atfcommons Wrap</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

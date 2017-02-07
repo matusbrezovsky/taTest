@@ -1,0 +1,13 @@
+#run tests for common_utils.txt library
+python -m robot.run --pythonpath src/ src/common_utils.robot
+
+#run tests for ATFCommons library (python implementation of common_utils.txt)
+python -m robot.run --pythonpath src/ src/atfcommons.robot
+
+# with wrap
+python -m robot.run -P src:src/cy src/atfcommons_wrap.robot
+
+# regenerate the report.html (using the existing output.xml
+python -m robot.rebot output.xml
+
+

@@ -1,0 +1,490 @@
+*** Settings ***
+Documentation   	Resource file template for global variables
+...
+...		Copy this into the project specific lib directory, rename it to global_vars.txt
+...		and fill it with project specific values
+
+*** Variables ***
+##################################################################################
+#
+#   #######  #     #  #######   #####         #####   #######  ######   #
+#   #         #   #   #        #     #       #     #     #     #     #  #
+#   #          # #    #        #             #           #     #     #  #
+#   #####       #     #####    #             #           #     ######   #
+#   #          # #    #        #             #           #     #   #    #
+#   #         #   #   #        #     #       #     #     #     #    #   #
+#   #######  #     #  #######   #####         #####      #     #     #  #######
+#
+##################################################################################
+# The NW mode that the devices use per default
+# COMMENT/DELETE this for "real" test runs
+#${DEV_NW_MODE}         3G2G
+#${DEV_NW_MODE}         LTE
+
+### Execution Control - common part START
+## Generic
+# Execution mode - Development mode. Faster execution due to skipping time consuming steps (verify that handset has coverage/is registedted)
+${DEVELOPMENT_MODE}         True
+${DBG_LOG}                  True
+${DBG_LEVEL}                INFO
+
+# Make separate logs for the TC setup steps (naming convention: tc_name_pre*)
+${TCSETUP_LOGS}             False
+# Take traces during TC setup - helps troubleshooting LUP failures during setup
+# NOTE: setup traces are overwritten with the "real" TC traces, if the TCSETUP_LOGS=False
+${TRC_SETUP}                False
+
+# Skip Verification Steps - NOTE: tcpdump (Trace) & sendspml will still be executed, only result verification will be skipped
+${SKIP_TRACE}           False
+${SKIP_SPML}            False
+
+# Ignore Errors During Tests
+${IGNORE_ERR_TRACE}     False
+${IGNORE_ERR_SPML}      False
+${IGNORE_ERR_MANUAL}    False    # ignore errors in manual steps valid only if ${DLGS_SKIP}=True
+
+## Manual Steps/ Dialogs
+# Skip Manual Step
+${DLGS_SKIP}            True
+#when skipping, should the Test Case Fail - default, can be overrriden per test case
+${DLGS_FAIL_ON_SKIP}    False
+# When skipping, how long should we sleep (e.g. wait until the call to PSTN starts to ring)
+# must be at least 20s - otherwise the VMS menu is not ready for the next steps
+# Can be overwritten in the tests using dialogs.
+${DLGS_SLEEP}           20s
+
+## Handset Control
+# Default call setup timeouts
+${CALL_TOUT}            20s
+${SMS_TOUT}             120s
+${USSD_TOUT}            60s
+
+${CALL_TOUT_ROAM}       120s
+${SMS_TOUT_ROAM}        180s
+
+# Default speaker behaviour
+${DEF_SPEAKER}          False
+
+## Network elements
+# SMSC timeout (e.g. for setting the MSGWAIT flags)
+${SMSC_TOUT}            90s
+# VMS Menu sleep time (between sendingDTMF)
+${VMS_DTMF_SLEEP}       2s
+# how many voice messages should be deleted - mailbox should be empty, otherwise the tests will fail
+${VMS_DEL_MSG}          20
+
+## results
+${RESULTS_ROOT_PATH}    ${EXECDIR}${/}results${/}
+
+## ISD wait - how long to wait for ISDs before continuing execution (e.g. wait after SPML change before stopping trace)
+## Needed if the primary notification target in OneNDS is not reachable it takes ~15second before the retry happens
+## if the wait is not long enough the ISD will not be in the trace and the TC will fail.
+${ISD_WAIT}             20s
+
+# D a t a   t e s t s
+# Website that is opened to test data connection
+${DATA_TEST_URL}            http://m.o2online.de
+# Text that should be on the test page - could also be in the HTML source
+${DATA_TEST_TXT_ON_PAGE}    HandheldFriendly
+${DATA_TEST_NO_CONN}        You are offline
+
+### Execution Control - common part END
+
+### Execution Control - project specific part START
+
+## Trace hosts and interfaces, these will be used in each test to start the traces.
+# NOTE: These are also used for the Diameter IF switchover test case (02.07.03.01)
+#   That TC setup shuts down all IF's on all FE's except the first ones on the list (e.g. hlrtb1-102.bond0.966 & hlrtb1-102.bond0.966)
+#   In the test case itself the first entry is assumed to be the "master" (e.g. hlrtb1-102.bond0.966)
+#   = to modify what is shut down and in which order, just change the order of these lists
+@{trace_hosts}          hlrtb1-102  hlrtb1-102  hlrtb3-202  hlrtb3-202  hlrtb3-203  hlrtb3-203
+@{trace_ifs_map}        bond0.106   bond0.107   bond0.206   bond0.207   bond0.206   bond0.207
+@{trace_ifs_dia}        bond0.966   bond0.967   bond0.966   bond0.970   bond0.966   bond0.970
+
+## Network elements
+# Who called service SMS timeout
+${WHC_TOUT}             90s
+
+### Execution Control - project specific part END
+
+###################################################
+#
+#   #######  ######      #      #####   #######
+#      #     #     #    # #    #     #  #
+#      #     #     #   #   #   #        #
+#      #     ######   #     #  #        #####
+#      #     #   #    #######  #        #
+#      #     #    #   #     #  #     #  #
+#      #     #     #  #     #   #####   #######
+#
+####################################################
+### Traces - common part START
+### Traces - common part END
+
+### Traces - project specific part START
+# NSR: QoS
+@{NSR_QOS_8}=   Delay class 3    Reliability class.*3    Peak throughput.*256 000    Precedence class: Normal    Mean throughput: Best effort    Retention priority: 2    Traffic class: Interactive    Delivery order: Streaming      Delivery of erroneous SDUs.*3    Maximum SDU size: 1500    Maximum.*uplink.*8640    Maximum.*downlink.*8640    BER.*7    SDU error ratio.*4     Transfer delay.*62    Traffic handling priority.*2    Guaranteed.*uplink.*: 1    Guaranteed.*downlink.*: 1
+@{NSR_QOS_4}=   Delay class 3    Reliability class.*3    Peak throughput.*256 000    Precedence class: Normal    Mean throughput: Best effort    Retention priority: 2    Traffic class: Interactive    Delivery order: Streaming      Delivery of erroneous SDUs.*3    Maximum SDU size: 1500    Maximum.*uplink.*6144    Maximum.*downlink.*7424    BER.*7    SDU error ratio.*4     Transfer delay.*62    Traffic handling priority.*2    Guaranteed.*uplink.*: 1    Guaranteed.*downlink.*: 1
+
+### Traces - project specific part START
+
+
+#########################################
+#
+#    #####   #     #  ######    #####
+#   #     #  #     #  #     #  #     #
+#   #        #     #  #     #  #
+#    #####   #     #  ######    #####
+#         #  #     #  #     #        #
+#   #     #  #     #  #     #  #     #
+#    #####    #####   ######    #####
+#
+#########################################
+# NOTE
+# For clarity prefix the _IMSI & _MSISDN variable using the device alias names,
+# this makes the test scripts more readable e.g.
+#     ${MsA}=             device_alias1
+#     ${MsB}=             device_alias1
+#     Initiate Device     ${MsA}
+#     Initiate Device     ${MsB}
+#     Send SMS            ${MsA}       ${${MsB}_MSISDN}     My SMS Text
+
+
+### T E S T   S U B S C R I B E R S
+## Single SIM subscribers
+${MsPost1_IMSI}         xxx
+#${MsPost1_ISDN}         4367761785198
+${MsPost1_ISDN}         491798380420
+#${MsPost1_ISDN}         491796203888
+
+${MsPost2_IMSI}         xxx
+#${MsPost2_ISDN}         4367761785199
+#${MsPost2_ISDN}         491798380420
+${MsPost2_ISDN}         491796203888
+#${MsPost2_ISDN}         4917672646464
+
+${MsPre1_IMSI}          xxx
+${MsPre1_ISDN}          4367761785198
+${MsPre2_IMSI}          xxx
+${MsPre2_ISDN}          4367761785199
+
+#########################################################
+#
+#     ###   #####   ######   #     #
+#      #   #     #  #     #  ##    #
+#      #   #        #     #  # #   #
+#      #    #####   #     #  #  #  #
+#      #         #  #     #  #   # #
+#      #   #     #  #     #  #    ##
+#     ###   #####   ######   #     #
+#
+#########################################################
+## Numbers
+# Testing "The number you have dialled is not known"
+${NBR_UNKNOWN}      024+
+# Testing NW initiated Abort (i.e. "dialling" --> "call ended"
+${NBR_BOGUS}        1234
+# Testing coverage (e.g. after airplane mode) --> must be a bogus one
+${NBR_COVERAGE}     ${NBR_BOGUS}
+
+
+# Voicemail
+${NBR_VOICEMAIL_SHORT}          333
+${NBR_VOICEMAIL_LONG}           491793000333
+# This number is called to keep one line busy (e.g. one MC member makes an MOC call to this nbr)
+${NBR_KEEPCONNECTED}            ${NBR_VOICEMAIL_SHORT}
+# These numbers are used as premium number (e.g. call forwarding not allowed)
+${NBR_PREMIUM}                  49176454545
+${NBR_0180_PREMIUM}             49180553399000
+# This number is used as PSTN number (e.g. call forwarding to PSTN)
+${NBR_PSTN}                     498924422470
+# Who called FTN (i.e. CFD)
+${NBR_WHOCALLED}                491793000400
+# This number is used when a call to international should be made (e.g to test barrings)
+# Number is for Austrian Avalance Warning Service
+${NBR_INTERN}                   43055742011588
+# ISDN to add as "Prohibited FTN" in the NSR
+${NBR_PROHIBITED_FTN}           491590330102120
+
+## VLR
+${VLR_ISDN}                     491760000004
+## SCF
+${SCF_ISDN}                     491760000398
+${SCF_BOGUS}                    491760000666
+## VMS
+${VMS_ISDN}                     491760000702
+## SMSC
+${SMSC_ISDN}                    491760000508
+${PROXY_SMSC_ISDN}              491760000555
+
+#########################################################
+#
+#       #     #   #####    #####   ######
+#       #     #  #     #  #     #  #     #
+#       #     #  #        #        #     #
+#       #     #   #####    #####   #     #
+#       #     #        #        #  #     #
+#       #     #  #     #  #     #  #     #
+#        #####    #####    #####   ######
+#
+#########################################################
+# Not USSD - but similar codes = type into dialler and call
+${SC_SHOW_IMEI}                \*#06#   # works without "call" button on some devices
+
+${SC_MSG_SHOW_IMEI}            IMEI
+
+${USSD_BOGUS}                \#0#
+
+
+# call forwarding
+${USSD_CFU_REG}                \**21*   # when using remember to add FTN and # = +"<FTN>#"
+${USSD_CFU_ACT}                \*21#
+${USSD_CFU_DACT}               \#21#
+${USSD_CFU_DEL}                \##21#
+${USSD_CFU_READ}               \*#21#
+${USSD_CFNRY_REG}              \**61*   # when using remember to add FTN & optional delay = +"FTN*DELAY#"
+${USSD_CFNRY_ACT}              \*61#
+${USSD_CFNRY_DACT}             \#61#
+${USSD_CFNRY_DEL}              \##61#
+${USSD_CFNRY_READ}             \*#61#
+${USSD_CFNRC_REG}              \**62*   # when using remember to add FTN and # = +"<FTN>#"
+${USSD_CFNRC_ACT}              \*62#
+${USSD_CFNRC_DACT}             \#62#
+${USSD_CFNRC_DEL}              \##62#
+${USSD_CFNRC_READ}             \*#62#
+${USSD_CFB_REG}                \**67*   # when using remember to add FTN and # = +"<FTN>#"
+${USSD_CFB_ACT}                \*67#
+${USSD_CFB_DACT}               \#67#
+${USSD_CFB_DEL}                \##67#
+${USSD_CFB_READ}               \*#67#
+
+${USSD_CF_ALLCOND_REG}         \**004*  # when using remember to add FTN and # = +"<FTN>#"
+${USSD_CF_ALLCOND_ACT}         \*004#
+${USSD_CF_ALLCOND_DACT}        \#004#
+${USSD_CF_ALLCOND_DEL}         \##004#
+${USSD_CF_ALLCOND_READ}        \*#004#
+
+${USSD_CF_ALL_REG}             \**002*  # when using remember to add FTN and # = +"<FTN>#"
+${USSD_CF_ALL_ACT}             \*002#
+${USSD_CF_ALL_DACT}            \#002#
+${USSD_CF_ALL_DEL}             \##002#
+${USSD_CF_ALL_READ}            \*#002#
+
+${USSD_CF_TIMER}               10      # working ones 10, 20, 25
+
+# call waiting
+${USSD_CAW_ACT}                \*43#
+${USSD_CAW_DACT}               \#43#
+${USSD_CAW_READ}               \*#43#
+
+# call barring
+${USSD_BAOC_ACT}               \*33*0000#
+${USSD_BAOC_DACT}              \#33*0000#
+${USSD_BAOC_READ}              \*#33#
+${USSD_BAIC_ACT}               \*35*0000#
+${USSD_BAIC_DACT}              \#35*0000#
+${USSD_BAIC_READ}              \*#35#
+${USSD_BOIC_ACT}               \*331*0000#
+${USSD_BOIC_DACT}              \#331*0000#
+${USSD_BOIC_READ}              \*#331#
+${USSD_BICROAM_ACT}            \*351*0000#
+${USSD_BICROAM_DACT}           \#351*0000#
+${USSD_BICROAM_READ}           \*#351#
+
+# CLIP
+${USSD_CLIP_ACT}               \*30#
+${USSD_CLIP_DACT}              \#30#
+#${USSD_CLIP_READ}             \*#30#
+
+# CLIR
+${USSD_CLIR_ACT}               \*31#
+${USSD_CLIR_DACT}              \#31#
+#${USSD_CLIR_READ}             \*#31#
+
+# USSD messages (displayed in the pop-up on the device)
+${USSD_MSG_ERROR}				invalid
+${USSD_MSG_CF_READ_OK}          forwarding
+${USSD_MSG_CF_READ_NFWD}        Not forwarded
+${USSD_MSG_CF_READ_WHC}         +${NBR_WHOCALLED}
+${USSD_MSG_CF_DACT_OK}			Service has been disabled
+${USSD_MSG_CF_DEL_OK}			Erase successful
+${USSD_MSG_CF_ACT_OK}			Service was enabled
+${USSD_MSG_CF_REG_OK}			Registration was successful
+${USSD_MSG_B_ACT_OK}            Service was enabled
+${USSD_MSG_B_DACT_OK}           Service has been disabled
+${USSD_MSG_CAW_ACT_OK}          Service was enabled
+${USSD_MSG_CAW_DACT_OK}         Service has been disabled
+${USSD_MSG_CLIP_ACT_OK}         Service was enabled
+${USSD_MSG_CLIP_DACT_OK}        Service has been disabled
+${USSD_MSG_CLIR_ACT_OK}         Service was enabled
+${USSD_MSG_CLIR_DACT_OK}        Service has been disabled
+
+# MC
+${USSD_MC_HELP}                 \*120#
+${USSD_MC_SHOW_MEM}             \*121#
+${USSD_MC_RESET}                \*128#
+${USSD_MC_SMS_DACT}             \*125*0#
+${USSD_MC_SMS_ACT}              \*125#
+${USSD_MC_SMS_ACT_M1}           \*125*1#
+${USSD_MC_SMS_ACT_M2}           \*125*2#
+${USSD_MC_SMS_ACT_M3}           \*125*3#
+${USSD_MC_MMS_DACT}             \*126*0#
+${USSD_MC_MMS_ACT}              \*126#
+${USSD_MC_NMS_ACT_M1}           \*126*1#
+${USSD_MC_NMS_ACT_M2}           \*126*2#
+${USSD_MC_NMS_ACT_M3}           \*126*3#
+#${USSD_MC_SMSIR_ACT_P4}         \*125*4#
+#${USSD_MC_SMSIR_ACT_P5}         \*125*5#
+${USSD_MC_VOICE_READ}           \*122#
+${USSD_MC_VOICE_ACT}            \*123#
+${USSD_MC_VOICE_ACT_P0}         \*124*0#
+${USSD_MC_VOICE_ACT_P1}         \*124*1#
+${USSD_MC_VOICE_ACT_P2}         \*124*2#
+${USSD_MC_VOICE_ACT_P3}         \*124*3#
+#${USSD_MC_VOICE_ACT_P4}         \*124*4#
+#${USSD_MC_VOICE_ACT_P5}         \*124*5#
+
+${USSD_MC_MSG_ERROR}            invalid
+${USSD_MC_MSG_SHOW}             Ihre aktiven SIM-Karten sind    #:1 - D1,2 - D2,3 - D3,4 - D4,5 - D5
+${USSD_MC_MSG_RESET}            Ihre Standardeinstellung wurde wiederhergestellt
+${USSD_MC_MSG_SMS_ACT_OK}       SMS Empfang jetzt auf: D
+${USSD_MC_MSG_SMS_DACT_OK}      SMS Empfang jetzt auf: D
+${USSD_MC_MSG_VOICE_ACT_OK}     Anrufempfang jetzt auf: D
+${USSD_MC_MSG_VOICE_ACT_P0}     Die Weiterleitungspriorität wurde geändert
+${USSD_MC_MSG_VOICE_ACT_P1}     Die Weiterleitungspriorität wurde geändert
+${USSD_MC_MSG_VOICE_ACT_P2}     Die Weiterleitungspriorität wurde geändert
+${USSD_MC_MSG_VOICE_ACT_P3}     Die Weiterleitungspriorität wurde geändert
+
+
+#########################################
+#
+#        #####    #####   #     #
+#       #     #  #     #  #     #
+#       #        #        #     #
+#        #####    #####   #######
+#             #        #  #     #
+#       #     #  #     #  #     #
+#        #####    #####   #     #
+#
+#########################################
+## SSH prompt i.e. string/character that will be used in reading the SSH output (e.g. after login and "read until prompt" methods)
+#${SSHPROMPT}                $
+${SSHPROMPT}                >
+
+## Hosts
+${TB1_HLR1}     172.29.93.117     # hlrtb1-102
+${TB3_HLR1}     172.29.93.125     # hlrtb3-202
+${TB3_HLR2}     172.29.93.126     # hlrtb3-203
+${TB3_PGW1}     172.29.88.143
+${TB1_PGW1}     172.29.87.143
+
+## Usernames
+${HLRUSER}      xxxx
+${HLRPWD}       xxxx
+${PGWUSER}      xxxx
+${PGWPWD}       xxxx
+
+
+
+###################################################################
+#
+#     ######   #######  #     #  ###   #####   #######   #####
+#     #     #  #        #     #   #   #     #  #        #     #
+#     #     #  #        #     #   #   #        #        #
+#     #     #  #####    #     #   #   #        #####     #####
+#     #     #  #         #   #    #   #        #              #
+#     #     #  #          # #     #   #     #  #        #     #
+#     ######   #######     #     ###   #####   #######   #####
+#
+###################################################################
+### D E V I C E S
+## A P P I U M
+# Host where the appium server is running for each device:
+${DEV_1_HOST}             127.0.0.1
+${DEV_2_HOST}             127.0.0.1
+${DEV_3_HOST}             127.0.0.1
+${DEV_4_HOST}             127.0.0.1
+${DEV_5_HOST}             127.0.0.1
+${DEV_6_HOST}             127.0.0.1
+# Port of the appium server for each device:
+${DEV_1_PORT}             4723
+${DEV_2_PORT}             4724
+${DEV_3_PORT}             4725
+${DEV_4_PORT}             4726
+${DEV_5_PORT}             4727
+${DEV_6_PORT}             4728
+
+# IMEI + S/N for reference, not used in the scripts:
+# 865170025321246 - A3B7N14C29000967
+# 865170025319935 - A3B7N14C29000836
+# 865170025319257 - A3B7N14C29000768
+# 865170025320727 - A3B7N14C29000915
+# 865170025335352 - A3B7N14C29002378
+# 865170021110171 - A3BDU14A13000365
+
+# Unique Device ID's:
+# Nokia NT-HLR TA
+# Firmware: Y550-L01V100R001C00B246
+# Huawei Y550_L01       68a0f676ea9f           device product:Y550-L01 model:HUAWEI_Y550_L01 device:hwY550-L01 / Post1
+# Huawei Y550_L01       581f280837c9           device product:Y550-L01 model:HUAWEI_Y550_L01 device:hwY550-L01 / Genion1
+# Huawei Y550_L01       581f280837fd           device product:Y550-L01 model:HUAWEI_Y550_L01 device:hwY550-L01 / Loop1
+# Huawei Y550_L01       581f28083736           device product:Y550-L01 model:HUAWEI_Y550_L01 device:hwY550-L01 / Post2
+# Huawei Y550_L01       581f2808377a           device product:Y550-L01 model:HUAWEI_Y550_L01 device:hwY550-L01 / Genion2
+# Huawei Y550_L01       581f28083d80           device product:Y550-L01 model:HUAWEI_Y550_L01 device:hwY550-L01 / Loop2
+# Samsung S5            7fa2ba02               device product:kltexx model:SM_G900F device:klte
+#
+# R&D:
+# Firmware: Y550-L01V100R001C00B237 / IMEI: 865170020588393
+# Huawei Y550_L01       80717aef8315           device product:Y550-L01 model:HUAWEI_Y550_L01 device:hwY550-L01
+# Firmware: Y550-L01V100R001C00B239SP01 / IMEI: 865170020815333
+# Huawei Y550_L01       68a0f6150c87           device product:Y550-L01 model:HUAWEI_Y550_L01 device:hwY550-L01
+#
+# Huawei Y530_U00       3cdfbd8ffa9e
+# Huawei G7_L01         68a0f6f98801
+# Motorola XT910        0A3BC3C21901800A
+#
+# Demo:
+# Huawei Y550_L01       581f28941788           device product:Y550-L01 model:HUAWEI_Y550_L01 device:hwY550-L01
+# Huawei Y550_L01       581f2894169d           device product:Y550-L01 model:HUAWEI_Y550_L01 device:hwY550-L01
+#${DEV_1_UDID}             581f28941788   	# MsPost1
+${DEV_1_UDID}             68a0f6150c87   	# MsPost1
+#${DEV_2_UDID}             7fa2ba02      # MsPost2
+#${DEV_2_UDID}             68a0f6150c87      # MsPost2
+#${DEV_2_UDID}             68a0f6f98801      # MsPost2
+#${DEV_1_UDID}             68a0f6f98801   	# MsPost1
+${DEV_2_UDID}             80717aef8315      # MsPost2
+${DEV_3_UDID}             no device 		# xxx
+${DEV_4_UDID}             no device   	    # xxx
+${DEV_5_UDID}             no device 		# xxx
+${DEV_6_UDID}             no device 		# xxx
+${DEV_X_UDID}             no device         # xxx
+
+# These must match with one of the keys in the
+# devices dictionary defined in the ngin_handset_ctrl_var.py
+${DEV_1_DEVICE}           huawei_Y550_L01   	# MsPost1
+#${DEV_1_DEVICE}           huawei_Y550_L01_B237  # MsPost1
+#${DEV_2_DEVICE}           samsung_S5_G900F   	# MsPost2
+${DEV_2_DEVICE}           huawei_Y550_L01   	# MsPost2
+#${DEV_1_DEVICE}           huawei_G7_L01_en   	# MsPost1
+#${DEV_2_DEVICE}           huawei_Y550_L01 		# MsPost2
+${DEV_3_DEVICE}           no device             # xxx
+${DEV_4_DEVICE}           no device             # xxx
+${DEV_5_DEVICE}           no device             # xxx
+${DEV_6_DEVICE}           no device             # xxx
+${DEV_X_UDID}             no device             # xxx
+# huawei_Y530_U00
+# huawei_Y550_L01
+# samsung_galaxy4_GT_I9505_en
+# sony_xperia_z1_C6903
+# huawei_Y530_U00
+# samsung_galaxy4_GT_I9505_de
+# huawei_G7_L01_en
+
+# Device Alias Mapping
+# TODO:
+# define the dictionary already here as soon as robot support dictionaries (issue #1450) in the variables section
+# (and remove the dictionary creation from "device setup" in device_ctrl.txt)
+@{ALIAS_LIST}           MsPost1   MsPost2   MsPre1   MsPre2
+@{DEV_LIST}             DEV_1     DEV_2     DEV_3    DEV_4
+
+*** Keywords ***
